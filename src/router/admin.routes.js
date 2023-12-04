@@ -1,19 +1,27 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const { nanoid } = require('nanoid');
 const router = express.Router();
 
 const admin = require('../models/admin.model');
 
 // Routes
 router.post('/register', async (req, res) => {
+	const saltRounds = 10;
+
+	let hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+	let email = req.body.email;
+	let id = nanoid(10);
+
 	let adminData = {
-		id: Math.random(),
-		email: req.body.email,
-		password: req.body.password
+		id,
+		email,
+		password: hashPassword
 	}
 
 	try {
-		let admins = await admin.register(adminData);
-		console.log(admins);
+		await admin.register(adminData);
+		res.status(201).send(`${email} is a registered Admin`);
 	} catch (err) {
 		console.log(err)
 	}
