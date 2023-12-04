@@ -6,21 +6,22 @@ const Admin = function(adminData) {
 	this.id = adminData.id
 }
 
-Admin.register = (newAdmin, results) => {
+Admin.register = async (newAdmin) => {
 	let adminQuery = `INSERT INTO admins (email, password, id) VALUES (?, ?, ?)`
 	
-	db.query(adminQuery, [newAdmin.email, newAdmin.password, newAdmin.id], (err, res) => {
-		if(err) {
-			results(err, null);
-			return
-		}
+	let [result] = await db.query(adminQuery, [newAdmin.email, newAdmin.password, newAdmin.id]);
 
-		results(null, res);
-	});
+	return result
 }
 
-Admin.login = () => {
+Admin.login = async (adminData) => {
+	let adminEmail = adminData.email
 
+	let adminQuery = `SELECT * FROM admins WHERE email="${adminEmail}"`
+
+	let [result] = await db.query(adminQuery);
+
+	return result
 }
 
 module.exports = Admin;

@@ -5,7 +5,7 @@ const db = mysql.createConnection({
 	user: process.env.USER,
 	password: process.env. PASSWORD,
 	multipleStatements: true
-});
+}).promise();
 
 let databaseQuery = "CREATE DATABASE IF NOT EXISTS ecommerce_db; USE ecommerce_db;"
 
@@ -15,22 +15,8 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`
 
-db.query(databaseQuery, (err, res) => {
-	if(err) {
-		console.log(err);
-		return
-	}
+db.query(databaseQuery);
 
-	console.log('E-commerce Database Created');
-});
-
-db.query(adminsTableQuery, (err, res) => {
-	if(err) {
-		console.log(err);
-		return
-	}
-
-	console.log('Admins Table Created');
-});
+db.query(adminsTableQuery);
 
 module.exports = db;
