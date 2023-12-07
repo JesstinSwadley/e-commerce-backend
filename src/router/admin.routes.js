@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
 		await admin.register(adminData);
 		res.status(201).send(`${email} is a registered Admin`);
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 	}
 });
 
@@ -35,9 +35,16 @@ router.post('/login', async (req, res) => {
 
 	try {
 		let admins = await admin.login(adminData);
-		console.log(admins);
+
+		let checkPass = await bcrypt.compare(adminData.password, admins[0].password);
+
+		if (checkPass == false) {
+			return res.send("Incorrect Email or Password");
+		}
+
+		res.send("Admin Login");
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 	}
 });
 
