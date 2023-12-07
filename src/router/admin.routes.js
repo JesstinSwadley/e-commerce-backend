@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const { nanoid } = require('nanoid');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const admin = require('../models/admin.model');
@@ -21,7 +22,10 @@ router.post('/register', async (req, res) => {
 
 	try {
 		await admin.register(adminData);
-		res.status(201).send(`${email} is a registered Admin`);
+
+		let token = await jwt.sign({user_id: id, email}, 'test', { expiresIn: '1h' });
+
+		res.status(201).send(token);
 	} catch (err) {
 		console.log(err);
 	}
@@ -42,7 +46,9 @@ router.post('/login', async (req, res) => {
 			return res.send("Incorrect Email or Password");
 		}
 
-		res.send("Admin Login");
+		let token = await jwt.sign({user_id: id, email}, 'test', { expiresIn: '1h' });
+
+		res.send(token);
 	} catch (err) {
 		console.log(err);
 	}
