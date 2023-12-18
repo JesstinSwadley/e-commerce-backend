@@ -15,8 +15,16 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`
 
+let productsTableQuery = `CREATE TABLE IF NOT EXISTS products (
+	productName VARCHAR(255) NOT NULL,
+	price DECIMAL(13,2) NOT NULL,
+	id VARCHAR(36) NOT NULL PRIMARY KEY
+)`
+
 db.query(databaseQuery);
 
 db.query(adminsTableQuery);
+
+db.query(productsTableQuery);
 
 module.exports = db;
