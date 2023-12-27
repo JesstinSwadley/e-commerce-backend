@@ -7,15 +7,15 @@ const Product = function(productData) {
 }
 
 Product.create = async (newProduct) => {
-	let productQuery = `INSERT INTO products (productName, price, id) VALUES (?, ?, ?)`
+	let productQuery = `INSERT INTO products (productName, price, productImage, id) VALUES (?, ?, ?, ?)`;
 
-	let [result] = await db.query(productQuery, [newProduct.productName, newProduct.price, newProduct.id]);
+	let [result] = await db.query(productQuery, [newProduct.productName, newProduct.price, newProduct.productImage, newProduct.id]);
 
 	return result
 }
 
 Product.readAll = async () => {
-	let productQuery = `SELECT * FROM products`
+	let productQuery = `SELECT * FROM products`;
 
 	let [results] = await db.query(productQuery);
 
@@ -27,7 +27,7 @@ Product.readAll = async () => {
 Product.update = async (productData) => {
 	let { productName, productPrice, productId } = productData
 
-	let productQuery = `UPDATE products SET productName="${productName}", price =${productPrice} WHERE id="${productId}"`
+	let productQuery = `UPDATE products SET productName="${productName}", price =${productPrice} WHERE id="${productId}"`;
 
 	let [ result ] = await db.query(productQuery);
 
@@ -37,7 +37,7 @@ Product.update = async (productData) => {
 }
 
 Product.delete = async (productId) => {
-	let productQuery = `DELETE FROM products WHERE id="${productId}"`
+	let productQuery = `DELETE FROM products WHERE id="${productId}"`;
 
 	let [ result ] = await db.query(productQuery);
 

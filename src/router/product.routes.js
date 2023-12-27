@@ -5,13 +5,15 @@ const router = express.Router();
 const product = require('../models/product.model');
 
 router.post('/create', async (req, res) => {
-	let productName = req.body.productName
-	let price = req.body.price
+	let productName = req.body.productName;
+	let price = req.body.price;
+	let productImage = req.body.productImage;
 	let id = nanoid(10);
 
 	let productData = {
 		productName,
 		price,
+		productImage,
 		id
 	}
 
