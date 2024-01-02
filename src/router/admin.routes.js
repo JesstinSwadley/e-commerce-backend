@@ -1,13 +1,13 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const { nanoid } = require('nanoid');
-const jwt = require('jsonwebtoken');
+const express = require("express");
+const bcrypt = require("bcrypt");
+const { nanoid } = require("nanoid");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-const admin = require('../models/admin.model');
+const admin = require("../models/admin.model");
 
 // Routes
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
 	const saltRounds = 10;
 
 	let hashPassword = await bcrypt.hash(req.body.password, saltRounds);
@@ -17,13 +17,15 @@ router.post('/register', async (req, res) => {
 	let adminData = {
 		id,
 		email,
-		password: hashPassword
-	}
+		password: hashPassword,
+	};
 
 	try {
 		await admin.register(adminData);
 
-		let token = await jwt.sign({user_id: id, email}, 'test', { expiresIn: '1h' });
+		let token = await jwt.sign({ user_id: id, email }, "test", {
+			expiresIn: "1h",
+		});
 
 		res.status(201).send(token);
 	} catch (err) {
@@ -31,26 +33,40 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
+	console.log("Received data:", req.body);
 	let adminData = {
 		email: req.body.email,
-		password: req.body.password
-	}
+		password: req.body.password,
+	};
 
 	try {
 		let admins = await admin.login(adminData);
-
-		let checkPass = await bcrypt.compare(adminData.password, admins[0].password);
-
-		if (checkPass == false) {
-			return res.send("Incorrect Email or Password");
+		console.log("Admin module:", admin);
+		if (admins.length === 0) {
+			return res.status(404).send("Incorrect Email or Password");
 		}
 
-		let token = await jwt.sign({user_id: id, email}, 'test', { expiresIn: '1h' });
+		let foundAdmin = admins[0];
+		let checkPass = await bcrypt.compare(
+			adminData.password,
+			foundAdmin.password
+		);
+
+		if (!checkPass) {
+			return res.status(401).send("Incorrect Email or Password");
+		}
+
+		let token = await jwt.sign(
+			{ user_id: foundAdmin.id, email: foundAdmin.email },
+			"test",
+			{ expiresIn: "1h" }
+		);
 
 		res.send(token);
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+		res.status(500).send("Internal Server Error");
 	}
 });
 
