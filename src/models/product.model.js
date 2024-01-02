@@ -1,7 +1,7 @@
 const db = require('./db');
 
 const Product = function(productData) {
-	this.prodcutName = productData.prodcutName,
+	this.productName = productData.productName,
 	this.price = productData.price,
 	this.id = productData.id
 }
