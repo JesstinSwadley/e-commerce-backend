@@ -17,6 +17,7 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	password VARCHAR(255) NOT NULL,
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`;
+)`;
 
 let productsTableQuery = `CREATE TABLE IF NOT EXISTS products (
 	productName VARCHAR(255) NOT NULL,
@@ -43,3 +44,4 @@ db.query(productsTableQuery);
 db.query(sampleProductsQuery);
 
 module.exports = db;
+
