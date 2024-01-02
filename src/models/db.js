@@ -4,7 +4,7 @@ const mysql = require("mysql2");
 const db = mysql
 	.createConnection({
 		host: process.env.HOST,
-		user: process.env.DB_USER, // USER is declared & cdoesn't work on MacOS
+		user: process.env.DB_USER, // USER is declared & doesn't work on MacOS
 		password: process.env.PASSWORD,
 		multipleStatements: true,
 	})
@@ -16,7 +16,6 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	id VARCHAR(36) NOT NULL PRIMARY KEY
-)`;
 )`;
 
 let productsTableQuery = `CREATE TABLE IF NOT EXISTS products (
