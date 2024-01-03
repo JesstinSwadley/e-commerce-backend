@@ -1,11 +1,10 @@
-require("dotenv").config();
 const mysql = require("mysql2");
 
 const db = mysql
 	.createConnection({
 		host: process.env.HOST,
 		user: process.env.DB_USER, // USER is declared & doesn't work on MacOS
-		password: process.env.PASSWORD,
+		password: process.env.DB_PASSWORD,
 		multipleStatements: true,
 	})
 	.promise();
@@ -43,4 +42,3 @@ db.query(productsTableQuery);
 db.query(sampleProductsQuery);
 
 module.exports = db;
-

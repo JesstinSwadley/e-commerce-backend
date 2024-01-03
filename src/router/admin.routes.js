@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
 	};
 
 	try {
-		await admin.register(adminData);
+		await admin.register(adminData); // Register admin
 
 		let token = await jwt.sign({ user_id: id, email }, "test", {
 			expiresIn: "1h",
