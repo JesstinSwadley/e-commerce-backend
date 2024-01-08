@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 // Express Configuration
@@ -10,13 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 3000;
 
 // Router
-const adminRoutes = require('./router/admin.routes');
-const productRoutes = require('./router/product.routes');
+const adminRoutes = require("./router/admin.routes");
+const productRoutes = require("./router/product.routes");
 
 // Routes
-app.use('/admin', adminRoutes);
-app.use('/products', productRoutes);
+app.use("/admin", adminRoutes);
+app.use("/products", productRoutes);
 
 app.listen(PORT, () => {
-	console.log(`Server is on Port ${PORT}`)
+	console.log(`Server is on Port ${PORT}`);
 });
