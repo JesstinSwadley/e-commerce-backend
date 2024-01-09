@@ -3,13 +3,14 @@ const db = require('.db');
 const User = function(userData) {
 	this.email = userData.email,
 	this.password = userData.password,
+	this.preferred_name = userData.preferred_name,
 	this.id = userData.id
 }
 
 User.register = async (newUser) => {
-	let userQuery = `INSERT INTO users (email, password, id) VALUES (?, ?, ?)`
+	let userQuery = `INSERT INTO users (email, password, id) VALUES (?, ?, ?, ?)`
 	
-	let [result] = await db.query(userQuery, [newUser.email, newUser.password, newUser.id]);
+	let [result] = await db.query(userQuery, [newUser.email, newUser.password, newUser.preferred_name, newUser.id]);
 
 	return result
 }

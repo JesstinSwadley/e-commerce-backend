@@ -3,13 +3,14 @@ const db = require('./db');
 const Admin = function(adminData) {
 	this.email = adminData.email,
 	this.password = adminData.password,
+	this.preferred_name = adminData.preferred_name,
 	this.id = adminData.id
 }
 
 Admin.register = async (newAdmin) => {
-	let adminQuery = `INSERT INTO admins (email, password, id) VALUES (?, ?, ?)`
+	let adminQuery = `INSERT INTO admins (email, password, preferred_name, id) VALUES (?, ?, ?, ?)`
 	
-	let [result] = await db.query(adminQuery, [newAdmin.email, newAdmin.password, newAdmin.id]);
+	let [result] = await db.query(adminQuery, [newAdmin.email, newAdmin.password, newAdmin.preferred_name, newAdmin.id]);
 
 	return result
 }
