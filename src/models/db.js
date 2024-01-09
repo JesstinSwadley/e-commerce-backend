@@ -17,6 +17,12 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`;
 
+let userTableQuery = `CREATE TABLE IF NOT EXISTS users (
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	id VARCHAR(36) NOT NULL PRIMARY KEY
+)`;
+
 let productsTableQuery = `CREATE TABLE IF NOT EXISTS products (
 	productName VARCHAR(255) NOT NULL,
 	price DECIMAL(13,2) NOT NULL,
@@ -36,6 +42,8 @@ let sampleProductsQuery = `REPLACE INTO
 db.query(databaseQuery);
 
 db.query(adminsTableQuery);
+
+db.query(userTableQuery);
 
 db.query(productsTableQuery);
 
