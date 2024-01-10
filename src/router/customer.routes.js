@@ -4,7 +4,7 @@ const { nanoid } = require("nanoid");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-const user = require("../models/user.model");
+const customer = require("../models/customer.model");
 
 // Routes
 router.post("/register", async (req, res) => {
@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
 	let preferred_name = req.body.preferred_name;
 	let id = nanoid(10);
 
-	let userData = {
+	let customerData = {
 		id,
 		email,
 		preferred_name,
@@ -23,10 +23,10 @@ router.post("/register", async (req, res) => {
 	};
 
 	try {
-		await user.register(userData); // Register user
+		await customer.register(customerData); // Register customer
 
 		let token = await jwt.sign(
-			{ user_id: id, email }, 
+			{ customer_id: id, email }, 
 			{ preferred_name, email },
 			{ expiresIn: "1h" }
 		);
@@ -39,22 +39,22 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
 	console.log("Received data:", req.body);
-	let userData = {
+	let customerData = {
 		email: req.body.email,
 		password: req.body.password,
 	};
 
 	try {
-		let users = await user.login(userData);
-		console.log("User module:", user);
-		if (users.length === 0) {
+		let customers = await customer.login(customerData);
+		console.log("Customer module:", customer);
+		if (customers.length === 0) {
 			return res.status(404).send("Incorrect Email or Password");
 		}
 
-		let foundUser = users[0];
+		let foundCustomer = customers[0];
 		let checkPass = await bcrypt.compare(
-			userData.password,
-			foundUser.password
+			customerData.password,
+			foundCustomer.password
 		);
 
 		if (!checkPass) {
@@ -62,8 +62,8 @@ router.post("/login", async (req, res) => {
 		}
 
 		let token = await jwt.sign(
-			{ user_id: foundUser.id, email: foundUser.email },
-			{ preferred_name: foundUser.preferred_name, email: foundUser.email },
+			{ customer_id: foundCustomer.id, email: foundCustomer.email },
+			{ preferred_name: foundCustomer.preferred_name, email: foundCustomer.email },
 			{ expiresIn: "1h" }
 		);
 

@@ -18,7 +18,7 @@ let adminsTableQuery = `CREATE TABLE IF NOT EXISTS admins (
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`;
 
-let userTableQuery = `CREATE TABLE IF NOT EXISTS users (
+let customerTableQuery = `CREATE TABLE IF NOT EXISTS customers (
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	preferred_name VARCHAR(255),
@@ -45,7 +45,7 @@ db.query(databaseQuery);
 
 db.query(adminsTableQuery);
 
-db.query(userTableQuery);
+db.query(customerTableQuery);
 
 db.query(productsTableQuery);
 
