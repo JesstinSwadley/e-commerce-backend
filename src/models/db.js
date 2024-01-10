@@ -32,6 +32,13 @@ let productsTableQuery = `CREATE TABLE IF NOT EXISTS products (
 	id VARCHAR(36) NOT NULL PRIMARY KEY
 )`;
 
+let ordersTableQuery = `CREATE TABLE IF NOT EXISTS orders (
+	product_id VARCHAR(36) NOT NULL,
+	customer_id VARCHAR(36) NOT NULL,
+	id VARCHAR(36) NOT NULL PRIMARY KEY,
+	created_at DATE DEFAULT CURRENT_DATE NOT NULL
+)`
+
 let sampleProductsQuery = `REPLACE INTO 
 	products (productName, price, productImage, id) 
 	VALUES 
@@ -48,6 +55,8 @@ db.query(adminsTableQuery);
 db.query(customerTableQuery);
 
 db.query(productsTableQuery);
+
+db.query(ordersTableQuery);
 
 db.query(sampleProductsQuery);
 

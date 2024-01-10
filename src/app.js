@@ -13,11 +13,13 @@ const PORT = process.env.PORT || 3000;
 const adminRoutes = require("./router/admin.routes");
 const productRoutes = require("./router/product.routes");
 const customerRoutes = require("./router/customer.routes");
+const orderRoutes = require("./router/order.routes");
 
 // Routes
 app.use("/admin", adminRoutes);
 app.use("/products", productRoutes);
 app.use("/customer", customerRoutes);
+app.use("/orders", orderRoutes);
 
 app.listen(PORT, () => {
 	console.log(`Server is on Port ${PORT}`);

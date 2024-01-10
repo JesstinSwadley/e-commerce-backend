@@ -24,3 +24,5 @@ Customer.login = async (customerData) => {
 
 	return result
 }
+
+module.exports = Customer;
